@@ -60,6 +60,7 @@ def delete_product(db: Session, seller_id: int, product_id: int) -> Product:
 def list_products(
     db: Session,
     seller_id: int | None = None,
+    product_id: int | None = None,
     status: str | None = None,
     name: str | None = None,
 ) -> list[Product]:
@@ -68,6 +69,9 @@ def list_products(
 
     if seller_id is not None:
         query = query.filter(Product.seller_id == seller_id)
+
+    if product_id is not None:
+        query = query.filter(Product.id == product_id)
 
     if status is not None:
         query = query.filter(Product.status == ProductStatus(status))

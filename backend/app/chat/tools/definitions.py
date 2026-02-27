@@ -41,10 +41,14 @@ TOOL_DEFINITIONS = [
         "type": "function",
         "function": {
             "name": "list_products",
-            "description": "등록된 상품 목록을 조회한다. 특정 상품을 찾을 때는 name으로 검색한다.",
+            "description": "등록된 상품 목록을 조회한다. ID로 조회하거나, name으로 검색한다.",
             "parameters": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "상품 ID (예: PRD-34). ID를 알고 있으면 이 파라미터만 사용한다.",
+                    },
                     "status": {
                         "type": "string",
                         "enum": ["active", "inactive"],

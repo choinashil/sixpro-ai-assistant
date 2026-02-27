@@ -20,7 +20,7 @@ def to_display_id(table: str, pk: int) -> str:
 
 def from_display_id(display_id: str) -> tuple[str, int]:
     """Display ID를 (테이블명, PK)로 역변환한다."""
-    prefix, _, pk_str = display_id.partition("-")
+    prefix, _, pk_str = display_id.upper().partition("-")
 
     if not pk_str:
         raise ValueError(f"잘못된 display ID 형식: {display_id}")
@@ -30,7 +30,10 @@ def from_display_id(display_id: str) -> tuple[str, int]:
 
 
 def parse_pk(display_id: str, expected_table: str) -> int:
-    """Display ID에서 PK만 추출한다. 테이블이 일치하지 않으면 에러."""
+    """Display ID에서 PK만 추출한다. 숫자만 들어오면 바로 PK로 처리한다."""
+    if display_id.isdigit():
+        return int(display_id)
+
     table, pk = from_display_id(display_id)
 
     if table != expected_table:

@@ -40,9 +40,12 @@ def _handle_create_product(ctx: ToolContext, arguments: dict) -> dict:
 
 
 def _handle_list_products(ctx: ToolContext, arguments: dict) -> dict:
+    product_id = parse_pk(arguments["id"], "products") if "id" in arguments else None
     status = arguments.get("status")
     name = arguments.get("name")
-    products = list_products(ctx.db, seller_id=ctx.seller_id, status=status, name=name)
+    products = list_products(
+        ctx.db, seller_id=ctx.seller_id, product_id=product_id, status=status, name=name
+    )
     return {
         "products": [_product_to_dict(p) for p in products],
         "total": len(products),

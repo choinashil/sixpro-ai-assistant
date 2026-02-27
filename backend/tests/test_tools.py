@@ -57,6 +57,25 @@ class TestExecuteTool:
 
         assert result["total"] == 2
 
+    def test_list_products_by_id(self, db):
+        seller = create_seller(db)
+        product = create_product(db, name="조회할 상품", price=5000, seller_id=seller.id)
+        display_id = to_display_id("products", product.id)
+
+        result = execute_tool(_ctx(db, seller), "list_products", {"id": display_id})
+
+        assert result["total"] == 1
+        assert result["products"][0]["name"] == "조회할 상품"
+
+    def test_list_products_by_digit_id(self, db):
+        seller = create_seller(db)
+        product = create_product(db, name="숫자ID 조회", price=3000, seller_id=seller.id)
+
+        result = execute_tool(_ctx(db, seller), "list_products", {"id": str(product.id)})
+
+        assert result["total"] == 1
+        assert result["products"][0]["name"] == "숫자ID 조회"
+
     def test_update_product(self, db):
         seller = create_seller(db)
         product = create_product(db, name="원래 상품", price=10000, seller_id=seller.id)

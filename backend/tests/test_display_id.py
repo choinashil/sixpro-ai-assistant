@@ -50,6 +50,14 @@ class TestFromDisplayId:
             from_display_id("XXX-1")
 
 
+class TestFromDisplayIdCaseInsensitive:
+    def test_lowercase(self):
+        assert from_display_id("prd-100") == ("products", 100)
+
+    def test_mixed_case(self):
+        assert from_display_id("Con-1") == ("conversations", 1)
+
+
 class TestParsePk:
     def test_correct_table(self):
         assert parse_pk("CON-5", "conversations") == 5
@@ -60,3 +68,9 @@ class TestParsePk:
 
     def test_msg_correct(self):
         assert parse_pk("MSG-10", "messages") == 10
+
+    def test_digit_only(self):
+        assert parse_pk("29", "products") == 29
+
+    def test_lowercase_prefix(self):
+        assert parse_pk("prd-29", "products") == 29
