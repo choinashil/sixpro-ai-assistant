@@ -27,6 +27,12 @@ class TestCreateProduct:
         with pytest.raises(ValueError, match="가격은 0원 이상이어야 합니다"):
             create_product(db, name="상품", price=-1000, seller_id=seller.id)
 
+    def test_raises_for_exceeding_max_price(self, db):
+        seller = create_seller(db)
+
+        with pytest.raises(ValueError, match="가격은 10,000,000원 이하여야 합니다"):
+            create_product(db, name="상품", price=10_000_001, seller_id=seller.id)
+
 
 class TestListProducts:
     def test_returns_all_products_for_seller(self, db):
@@ -198,6 +204,13 @@ class TestUpdateProduct:
 
         with pytest.raises(ValueError, match="가격은 0원 이상이어야 합니다"):
             update_product(db, seller_id=seller.id, product_id=product.id, price=-500)
+
+    def test_raises_for_exceeding_max_price(self, db):
+        seller = create_seller(db)
+        product = create_product(db, name="상품", price=10000, seller_id=seller.id)
+
+        with pytest.raises(ValueError, match="가격은 10,000,000원 이하여야 합니다"):
+            update_product(db, seller_id=seller.id, product_id=product.id, price=10_000_001)
 
 
 class TestDeleteProduct:

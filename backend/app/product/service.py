@@ -5,9 +5,15 @@ from app.product.model import Product, ProductStatus
 _UPDATABLE_FIELDS = {"name", "price", "status"}
 
 
+_MIN_PRICE = 0
+_MAX_PRICE = 10_000_000
+
+
 def _validate_price(price: int) -> None:
-    if price < 0:
-        raise ValueError("가격은 0원 이상이어야 합니다")
+    if price < _MIN_PRICE:
+        raise ValueError(f"가격은 {_MIN_PRICE:,}원 이상이어야 합니다")
+    if price > _MAX_PRICE:
+        raise ValueError(f"가격은 {_MAX_PRICE:,}원 이하여야 합니다")
 
 
 def create_product(db: Session, seller_id: int, name: str, price: int) -> Product:
