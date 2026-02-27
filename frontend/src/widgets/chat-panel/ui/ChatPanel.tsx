@@ -78,7 +78,7 @@ const ChatPanel = ({
   }, [resetChat, onInputChange, inputRef]);
 
   return (
-    <aside className='flex w-100 flex-col overflow-hidden rounded-t-2xl bg-background shadow-sm'>
+    <aside className='flex w-80 flex-col overflow-hidden rounded-t-2xl bg-background shadow-sm lg:w-100'>
       <header className='flex items-center gap-2 pl-5 pr-4 pt-4 pb-3'>
         <h2 className='text-xl font-semibold'>AI 채팅</h2>
         <div className='ml-auto flex items-center gap-1'>
