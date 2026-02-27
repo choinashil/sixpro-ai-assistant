@@ -48,11 +48,11 @@ TOOL_DEFINITIONS = [
                     "status": {
                         "type": "string",
                         "enum": ["active", "inactive"],
-                        "description": "상품 상태 필터 (미지정 시 전체 조회)",
+                        "description": "상품 상태 필터. 사용자가 명시적으로 상태를 언급한 경우에만 지정한다. 미지정 시 전체 상태 조회.",
                     },
                     "name": {
                         "type": "string",
-                        "description": "상품명 검색 키워드 (부분 일치)",
+                        "description": "상품명 검색 키워드 (부분 일치). 가격·상태 등 상품명이 아닌 조건은 넣지 않는다.",
                     },
                 },
             },
