@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 _SITE_NOISE = {"식스샵 프로 가이드", "(클릭) "}
 _REQUIRED_BREADCRUMB_PREFIX = "식스샵 프로 활용하기"
 _MIN_BREADCRUMB_DEPTH = 4  # "가이드 > 활용하기 > 카테고리 > 페이지" = 콘텐츠
+_SIMILARITY_THRESHOLD = 0.45
 
 _text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -187,4 +188,5 @@ def search_guide(db: Session, query: str, top_k: int = 3) -> list[dict]:
             "similarity": round(1 - distance, 4),
         }
         for chunk, doc, distance in results
+        if 1 - distance >= _SIMILARITY_THRESHOLD
     ]
